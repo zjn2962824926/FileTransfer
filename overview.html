@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文件传输工具 - 项目概览</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', 'PingFang SC', sans-serif; background: #f0f2f5; color: #222; }
+  header { background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); color: #fff; padding: 32px 40px; }
+  header h1 { font-size: 28px; font-weight: 700; letter-spacing: .5px; }
+  header p { margin-top: 8px; opacity: .85; font-size: 15px; }
+  .container { max-width: 960px; margin: 32px auto; padding: 0 20px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+  .card h2 { font-size: 17px; font-weight: 700; color: #1a73e8; margin-bottom: 14px; display:flex; align-items:center; gap:8px; }
+  .card ul { list-style: none; }
+  .card ul li { padding: 7px 0; border-bottom: 1px solid #f3f3f3; font-size: 14px; display:flex; align-items:flex-start; gap:8px; }
+  .card ul li:last-child { border-bottom: none; }
+  .badge { background:#e8f0fe; color:#1a73e8; border-radius:6px; padding:2px 8px; font-size:12px; font-weight:600; flex-shrink:0; }
+  .badge.green { background:#e6f4ea; color:#137333; }
+  .badge.orange { background:#fce8e6; color:#c5221f; }
+  .arch { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,.08); margin-bottom: 24px; }
+  .arch h2 { font-size: 17px; font-weight: 700; color: #1a73e8; margin-bottom: 16px; }
+  .arch-svg { width:100%; }
+  .proto-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .proto-table th { background:#1a73e8; color:#fff; padding:9px 12px; text-align:left; }
+  .proto-table td { padding:8px 12px; border-bottom:1px solid #f0f0f0; }
+  .proto-table tr:nth-child(even) td { background:#f8f9ff; }
+  .quickstart { background:#fff; border-radius:12px; padding:24px; box-shadow:0 2px 12px rgba(0,0,0,.08); margin-bottom:24px; }
+  .quickstart h2 { font-size:17px; font-weight:700; color:#1a73e8; margin-bottom:14px; }
+  .step { display:flex; gap:14px; margin-bottom:16px; align-items:flex-start; }
+  .step-num { width:30px; height:30px; background:#1a73e8; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
+  .step-body h3 { font-size:14px; font-weight:700; margin-bottom:4px; }
+  .step-body code { display:block; background:#1e1e2e; color:#cdd6f4; padding:10px 14px; border-radius:8px; font-family:Consolas,monospace; font-size:13px; margin-top:6px; white-space:pre; }
+  footer { text-align:center; padding:20px; color:#888; font-size:13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📁 轻量级文件传输工具</h1>
+  <p>Python Socket 服务端 + PyQt5 客户端 · 多客户端互传 · 实时中继 · 无需安装额外服务</p>
+</header>
+
+<div class="container">
+
+  <div class="grid">
+    <!-- 服务端特性 -->
+    <div class="card">
+      <h2>🖥️ 服务端 <code style="font-size:13px;color:#555;font-weight:400">server.py</code></h2>
+      <ul>
+        <li><span class="badge">多线程</span> 每个客户端独立线程，互不阻塞</li>
+        <li><span class="badge">文件中继</span> 流式转发，服务端不落盘，内存友好</li>
+        <li><span class="badge">用户管理</span> 注册、在线列表、下线清理</li>
+        <li><span class="badge green">广播</span> 用户列表变动自动推送所有客户端</li>
+        <li><span class="badge green">聊天</span> 支持私聊和广播消息转发</li>
+        <li><span class="badge orange">纯标准库</span> socket + threading，零依赖</li>
+      </ul>
+    </div>
+    <!-- 客户端特性 -->
+    <div class="card">
+      <h2>💻 客户端 <code style="font-size:13px;color:#555;font-weight:400">client.py</code></h2>
+      <ul>
+        <li><span class="badge">PyQt5 GUI</span> 现代 Fusion 风格界面，跨平台</li>
+        <li><span class="badge">进度条</span> 大文件发送实时显示进度</li>
+        <li><span class="badge green">自动接收</span> 来文件时后台自动保存到指定目录</li>
+        <li><span class="badge green">在线列表</span> 实时刷新，双击切换私聊对象</li>
+        <li><span class="badge">不阻塞 UI</span> 网络收发在独立 QThread 中运行</li>
+        <li><span class="badge orange">可配置</span> 服务器地址/端口/接收目录均可自定义</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 架构图 -->
+  <div class="arch">
+    <h2>🏗️ 架构示意</h2>
+    <svg class="arch-svg" viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#1a73e8"/>
+        </marker>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#137333"/>
+        </marker>
+      </defs>
+      <!-- Client A -->
+      <rect x="20" y="60" width="160" height="80" rx="10" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
+      <text x="100" y="93" text-anchor="middle" fill="#1a73e8" font-weight="700" font-size="14">Client A</text>
+      <text x="100" y="113" text-anchor="middle" fill="#444" font-size="11">PyQt5</text>
+      <text x="100" y="130" text-anchor="middle" fill="#666" font-size="10">Alice</text>
+      <!-- Client B -->
+      <rect x="20" y="170" width="0" height="0"/>
+      <!-- Server -->
+      <rect x="330" y="30" width="200" height="140" rx="12" fill="#e6f4ea" stroke="#137333" stroke-width="2"/>
+      <text x="430" y="75" text-anchor="middle" fill="#137333" font-weight="700" font-size="15">Server</text>
+      <text x="430" y="98" text-anchor="middle" fill="#555" font-size="11">Python Socket</text>
+      <text x="430" y="116" text-anchor="middle" fill="#555" font-size="11">多线程 · 流式中继</text>
+      <text x="430" y="134" text-anchor="middle" fill="#555" font-size="11">不落盘 · 低内存</text>
+      <text x="430" y="152" text-anchor="middle" fill="#777" font-size="10">0.0.0.0:9999</text>
+      <!-- Client C -->
+      <rect x="680" y="60" width="160" height="80" rx="10" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
+      <text x="760" y="93" text-anchor="middle" fill="#1a73e8" font-weight="700" font-size="14">Client B</text>
+      <text x="760" y="113" text-anchor="middle" fill="#444" font-size="11">PyQt5</text>
+      <text x="760" y="130" text-anchor="middle" fill="#666" font-size="10">Bob</text>
+      <!-- Arrows A->Server -->
+      <line x1="182" y1="95" x2="328" y2="95" stroke="#1a73e8" stroke-width="2" marker-end="url(#arr)"/>
+      <text x="255" y="87" text-anchor="middle" fill="#1a73e8" font-size="11">register / file_request</text>
+      <!-- Arrows Server->B -->
+      <line x1="532" y1="110" x2="678" y2="110" stroke="#137333" stroke-width="2" marker-end="url(#arr2)"/>
+      <text x="605" y="130" text-anchor="middle" fill="#137333" font-size="11">incoming_file + payload</text>
+      <!-- Return -->
+      <line x1="678" y1="95" x2="532" y2="95" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+      <line x1="328" y1="110" x2="182" y2="110" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+    </svg>
+  </div>
+
+  <!-- 协议表 -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2>📡 通信协议消息类型</h2>
+    <table class="proto-table">
+      <tr><th>type</th><th>方向</th><th>说明</th></tr>
+      <tr><td>register</td><td>Client→Server</td><td>注册用户名，首条必须发送</td></tr>
+      <tr><td>register_ok</td><td>Server→Client</td><td>注册成功确认</td></tr>
+      <tr><td>get_users</td><td>Client→Server</td><td>请求在线用户列表</td></tr>
+      <tr><td>user_list</td><td>Server→Client</td><td>推送在线用户列表（上下线自动广播）</td></tr>
+      <tr><td>file_request</td><td>Client→Server</td><td>发起文件传输，header 后紧跟二进制 payload</td></tr>
+      <tr><td>incoming_file</td><td>Server→Client</td><td>通知接收方有文件，紧接着跟二进制数据</td></tr>
+      <tr><td>file_sent_ok</td><td>Server→Client</td><td>通知发送方中继完成</td></tr>
+      <tr><td>file_received_ok</td><td>Server→Client</td><td>通知双方传输成功</td></tr>
+      <tr><td>chat</td><td>双向</td><td>聊天消息，to 字段为空则广播</td></tr>
+      <tr><td>error</td><td>Server→Client</td><td>错误消息</td></tr>
+    </table>
+  </div>
+
+  <!-- 快速开始 -->
+  <div class="quickstart">
+    <h2>🚀 快速开始</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>安装依赖（服务端无需安装）</h3>
+        <code>pip install PyQt5</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>启动服务端</h3>
+        <code>python server.py                    # 默认 0.0.0.0:9999
+python server.py --host 0.0.0.0 --port 8888  # 自定义端口</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>启动客户端（可多开）</h3>
+        <code>python client.py</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>在 GUI 中操作</h3>
+        <code>填写服务器地址 + 端口 + 用户名 → 连接
+选中在线用户 → 点击「发送文件」→ 选择文件 → 自动传输
+接收方自动收到文件并保存到指定目录（默认桌面）</code>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer>轻量级文件传输工具 · Python Socket + PyQt5 · 生成于 2026-05-22</footer>
+</body>
+</html>
