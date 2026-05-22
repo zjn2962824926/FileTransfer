@@ -8,6 +8,8 @@
 
 ```
 file_transfer/
+├── dist
+    ├── client.exe     # x64版本客户端
 ├── server.py          # 服务端
 ├── client.py          # PyQt5 客户端
 ├── requirements.txt   # 依赖
@@ -41,9 +43,14 @@ python server.py --host 0.0.0.0 --port 8888
 ```bash
 python client.py
 ```
+### 4. 客户端打包
+```bash
+pyinstaller -w -i file_transfer.ico -F client.py
+```
+也可直接使用dist/client.exe文件，无需安装py环境
 
 在 GUI 界面中填写：
-- **服务器地址**：默认：`127.0.0.1`），若没有服务器地址可尝试使用：`49.235.40.3`进行文件传输
+- **服务器地址**：默认：`127.0.0.1`），若没有服务器地址可尝试使用：`49.235.40.3`进行临时文件传输
 - **端口**：与服务端一致（默认 17887）
 - **用户名**：在线唯一标识（不能重复）
 
