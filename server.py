@@ -22,7 +22,7 @@ logging.basicConfig(
 log = logging.getLogger("server")
 
 HOST = "0.0.0.0"
-PORT = 9999
+PORT = 17887
 BUFFER_SIZE = 65536  # 64KB 读取块大小
 
 

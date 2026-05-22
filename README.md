@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 ```bash
 python server.py
-# 默认监听 0.0.0.0:9999
+# 默认监听 0.0.0.0:17887
 
 # 自定义地址和端口
 python server.py --host 0.0.0.0 --port 8888
